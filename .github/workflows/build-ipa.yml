@@ -31,6 +31,8 @@ jobs:
   build:
     runs-on: macos-latest
     timeout-minutes: 45
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -82,3 +84,17 @@ jobs:
           name: roelyang-ipa-unsigned
           path: roelyang.ipa
           if-no-files-found: error
+
+      # Artifacts need a GitHub login, a release asset does not. The tag is
+      # replaced on every build, so the download link always stays the same.
+      - name: Publish the public download
+        if: github.ref == 'refs/heads/prototyp'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete prototyp-latest --cleanup-tag --yes || true
+          gh release create prototyp-latest roelyang.ipa \
+            --target "$GITHUB_SHA" \
+            --prerelease \
+            --title "Roelyang Prototyp (unsigned)" \
+            --notes "Unsigned test build. It has to be signed with your own Apple ID before it can be installed, for example with Sideloadly."

@@ -4,23 +4,19 @@ Flutter-App für die tibetische Laute: Tuner, spielbares Instrument und kurzer L
 Sie bildet Funktionen und Aufbau von „Dranyen" nach, mit eigenem Code und eigenen
 Assets. Details in [docs/ANALYSE.md](docs/ANALYSE.md).
 
+## Download
+
+[roelyang.ipa herunterladen](https://github.com/Gaschde/roelyang_/releases/download/prototyp-latest/roelyang.ipa)
+(ohne GitHub-Anmeldung)
+
+Die IPA ist unsigniert und lässt sich nicht direkt auf dem iPhone installieren. Sie muss
+zuerst mit einer eigenen Apple-ID signiert werden, zum Beispiel am PC mit Sideloadly.
+
 ## roelyang.ipa bauen
 
-Ein iOS-Build braucht macOS und Xcode, deshalb baut GitHub Actions die IPA:
-
-```powershell
-git init -b main
-git add .
-git commit -m "Roelyang Prototyp"
-git remote add origin https://github.com/DEIN-NAME/roelyang_prototyp.git
-git push -u origin main
-```
-
-Danach unter **Actions → Build roelyang.ipa** den Lauf abwarten und das Artefakt
-`roelyang-ipa-unsigned` herunterladen.
-
-Die IPA ist unsigniert. Installieren lässt sie sich mit deiner eigenen Apple-ID, zum
-Beispiel über Sideloadly oder AltStore.
+Ein iOS-Build braucht macOS und Xcode, deshalb baut GitHub Actions die IPA bei jedem
+Push. Ein Push auf `prototyp` ersetzt auch den Download oben. Das Artefakt
+`roelyang-ipa-unsigned` steht zusätzlich unter **Actions → Build roelyang.ipa** bereit.
 
 ## Assets neu erzeugen
 
