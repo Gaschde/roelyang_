@@ -23,7 +23,7 @@ class _PlayEngine {
     final soloud = SoLoud.instance;
     if (!soloud.isInitialized) await soloud.init();
     for (final note in const [so, la, thi, doNote, re, mi, fa]) {
-      _sources[note.id] = await soloud.loadAsset('assets/audio/${note.id}.wav');
+      _sources[note.id] = await soloud.loadAsset('assets/audio/${note.id}.mp3');
     }
   }
 

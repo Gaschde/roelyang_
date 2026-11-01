@@ -72,8 +72,11 @@ Screenshot, die übrigen Zahlen folgen aus der Reihenfolge der Tonleiter (Annahm
 **Übernommen:** Funktionsumfang, Bildschirmaufbau, musikalische Fakten, gleicher
 Technik-Stack, ohne `google_fonts`, weil das Schriften zur Laufzeit lädt.
 
-**Bewusst nicht übernommen:** Code, Logos, App-Icon, Launch-Bilder, die sieben
-Aufnahmen, Lern- und About-Texte, Bundle-ID und der Name der Stiftung. Sie gehören dem
+**Mit Erlaubnis übernommen** (Angabe des Projektinhabers vom 2026-11-01): die sieben
+Tonaufnahmen.
+
+**Bewusst nicht übernommen:** Code, Logos, App-Icon, Launch-Bilder,
+Lern- und About-Texte und die Bundle-ID. Sie gehören dem
 Herausgeber. Der Nachbau ist deshalb funktional und im Aufbau gleich, aber keine
 bitgenaue Kopie.
 

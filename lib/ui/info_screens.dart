@@ -157,8 +157,8 @@ class AboutScreen extends StatelessWidget {
           ),
           const _Section(
             'Sounds',
-            'The Play screen uses synthesised placeholder sounds, not '
-                'recordings of a real instrument.',
+            'The Play screen uses recordings of a real dranyen from the Dranyen '
+                'app by the Terma Heritage Foundation, used with permission.',
           ),
           const _Section(
             'Privacy',

@@ -27,14 +27,14 @@ Ein iOS-Build braucht macOS und Xcode, deshalb baut GitHub Actions die IPA bei j
 Push. Ein Push auf `prototyp` ersetzt auch den Download oben. Das Artefakt
 `roelyang-ipa-unsigned` steht zusätzlich unter **Actions → Build roelyang.ipa** bereit.
 
-## Assets neu erzeugen
+## Icons neu erzeugen
 
 ```powershell
 python scripts/generate_assets.py
 ```
 
-Die Klänge sind synthetisiert und gelten nur als Platzhalter. Echte Aufnahmen kommen
-als `assets/audio/<ton>.wav` mit denselben Namen hinein.
+Die Tonaufnahmen in `assets/audio/` stammen aus der App Dranyen der Terma Heritage
+Foundation und werden mit Erlaubnis verwendet. Sie stehen nicht unter einer freien Lizenz.
 
 ## Lizenzen
 
