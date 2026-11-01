@@ -71455,7 +71455,7 @@ A.rI.prototype={
 J(a){var s=null,r=this.c
 return A.Hx(A.aiB(s,A.cq(r.b,s,s,s,s)),A.ajz(A.d([A.cq(r.d,s,s,B.Ot,s),B.wG,B.PT],t.D),B.ll))}}
 A.Cy.prototype={
-J(a){return A.Hx(A.aiB(!0,B.PY),A.ajz(A.d([B.Sf,B.Sd,B.Se,B.Sg,new A.p9(A.a1U(),new A.S4(),null,t.nQ)],t.D),B.ll))}}
+J(a){return A.Hx(A.aiB(!0,B.PY),A.ajz(A.d([B.Se,B.Sd,B.Sg,B.Sf,new A.p9(A.a1U(),new A.S4(),null,t.nQ)],t.D),B.ll))}}
 A.S4.prototype={
 $2(a,b){var s=b.b
 return A.cq(s==null?"":"Version "+s.c+" ("+s.d+")",null,null,B.fC,null)},
@@ -71477,7 +71477,7 @@ break}n=B.E_[o].a
 l=p
 k=n
 s=8
-return A.u(m.w5("assets/audio/"+n+".wav"),$async$lY)
+return A.u(m.w5("assets/audio/"+n+".mp3"),$async$lY)
 case 8:l.m(0,k,b)
 case 6:++o
 s=5
@@ -77632,9 +77632,9 @@ B.jP=new A.f4(9,"drawer")
 B.Sb=new A.AR("CONCERT PITCH",null)
 B.Sc=new A.AR("MATCH YOUR OWN LA",null)
 B.Sd=new A.oa("Tuning","Tap Start and allow the microphone, then pluck an open string. The tuner finds the note by itself. Choose La, Re or So to lock onto one course. Turn the peg until the needle is centred and the note turns green.",null)
-B.Se=new A.oa("Sounds","The Play screen uses synthesised placeholder sounds, not recordings of a real instrument.",null)
-B.Sf=new A.oa("What this is","Roelyang Prototyp is an experimental tuner and practice tool for the Tibetan lute. It is an independent prototype and is not affiliated with any other app or organisation.",null)
-B.Sg=new A.oa("Privacy","The microphone is only used to measure pitch on your device. Audio is not saved or sent anywhere, and the app has no accounts, ads or tracking.",null)
+B.Se=new A.oa("What this is","Roelyang Prototyp is an experimental tuner and practice tool for the Tibetan lute. It is an independent prototype and is not affiliated with any other app or organisation.",null)
+B.Sf=new A.oa("Privacy","The microphone is only used to measure pitch on your device. Audio is not saved or sent anywhere, and the app has no accounts, ads or tracking.",null)
+B.Sg=new A.oa("Sounds","The Play screen uses recordings of a real dranyen from the Dranyen app by the Terma Heritage Foundation, used with permission.",null)
 B.Sh=new A.Bg(B.l9,B.hB)
 B.fY=new A.Bi(0,"leading")
 B.fZ=new A.Bi(1,"middle")
