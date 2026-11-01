@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_soloud/flutter_soloud.dart';
 
+import '../core/note_player.dart';
 import '../core/tuning.dart';
 
 const _courseX = [0.34, 0.63, 0.90];
@@ -15,32 +15,7 @@ const _frets = <int, List<ScaleNote>>{
   1: [mi, fa],
 };
 
-class _PlayEngine {
-  final _sources = <String, AudioSource>{};
-  final _voices = <int, SoundHandle>{};
-
-  Future<void> init() async {
-    final soloud = SoLoud.instance;
-    if (!soloud.isInitialized) await soloud.init();
-    for (final note in const [so, la, thi, doNote, re, mi, fa]) {
-      _sources[note.id] = await soloud.loadAsset('assets/audio/${note.id}.mp3');
-    }
-  }
-
-  void pluck(int course, ScaleNote note) {
-    final source = _sources[note.id];
-    if (source == null) return;
-    final soloud = SoLoud.instance;
-    final previous = _voices[course];
-    if (previous != null) unawaited(soloud.stop(previous));
-    _voices[course] = soloud.play(source);
-  }
-
-  void dispose() {
-    final soloud = SoLoud.instance;
-    if (soloud.isInitialized) soloud.deinit();
-  }
-}
+const _allNotes = [so, la, thi, doNote, re, mi, fa];
 
 class PlayScreen extends StatefulWidget {
   const PlayScreen({super.key});
@@ -50,7 +25,7 @@ class PlayScreen extends StatefulWidget {
 }
 
 class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
-  final _engine = _PlayEngine();
+  final _engine = NotePlayer();
   final _heldFret = <int, ScaleNote>{};
   final _pointerX = <int, double>{};
   late final List<AnimationController> _vibration;
@@ -73,9 +48,9 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
 
   Future<void> _load() async {
     try {
-      await _engine.init();
+      await _engine.init(_allNotes.map((note) => note.id));
       if (mounted) setState(() => _ready = true);
-    } on Exception catch (error) {
+    } catch (error) {
       if (mounted) setState(() => _error = 'Sound could not start: $error');
     }
   }
@@ -91,7 +66,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
 
   void _play(int course, ScaleNote note) {
     if (!_ready) return;
-    _engine.pluck(course, note);
+    _engine.pluck(course, note.id);
     _vibration[course].forward(from: 0);
   }
 
