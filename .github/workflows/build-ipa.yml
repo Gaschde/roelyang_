@@ -1,0 +1,84 @@
+name: Build roelyang.ipa
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  # Separate from the build, so a lint warning or failed test stays visible
+  # without stopping the IPA.
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Test
+        if: ${{ !cancelled() }}
+        run: flutter test
+
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Generate the iOS project
+        run: flutter create --org ch.roelyang --project-name roelyang_prototyp --platforms ios .
+
+      - name: Configure the iOS project
+        run: |
+          plist=ios/Runner/Info.plist
+          pb=/usr/libexec/PlistBuddy
+          "$pb" -c "Delete :CFBundleDisplayName" "$plist" 2>/dev/null || true
+          "$pb" -c "Add :CFBundleDisplayName string 'Roelyang Prototyp'" "$plist"
+          "$pb" -c "Delete :NSMicrophoneUsageDescription" "$plist" 2>/dev/null || true
+          "$pb" -c "Add :NSMicrophoneUsageDescription string 'Roelyang Prototyp uses the microphone to measure the pitch of your strings. Audio is not saved.'" "$plist"
+          "$pb" -c "Delete :UISupportedInterfaceOrientations" "$plist" 2>/dev/null || true
+          "$pb" -c "Add :UISupportedInterfaceOrientations array" "$plist"
+          "$pb" -c "Add :UISupportedInterfaceOrientations:0 string UIInterfaceOrientationPortrait" "$plist"
+          project=ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' 's/ch\.roelyang\.roelyangPrototyp/ch.roelyang.prototyp/g' "$project"
+          sed -i '' 's/TARGETED_DEVICE_FAMILY = "1,2"/TARGETED_DEVICE_FAMILY = 1/g' "$project"
+
+      - name: Generate icon and launch screen
+        run: |
+          dart run flutter_launcher_icons
+          dart run flutter_native_splash:create
+
+      - name: Build without signing
+        run: flutter build ios --release --no-codesign
+
+      - name: Package roelyang.ipa
+        run: |
+          mkdir Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/
+          zip -qry roelyang.ipa Payload
+          /usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" Payload/Runner.app/Info.plist
+          /usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" Payload/Runner.app/Info.plist
+          ls -lh roelyang.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: roelyang-ipa-unsigned
+          path: roelyang.ipa
+          if-no-files-found: error
