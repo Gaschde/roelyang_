@@ -1,7 +1,7 @@
 """Generates the app's own sounds and icon. Nothing comes from another app.
 
 Run from the project root:  python scripts/generate_assets.py
-Needs numpy. Writes assets/audio/*.wav and assets/branding/icon.png.
+Needs numpy. Writes assets/audio/*.wav, assets/branding/icon.png and the web icons.
 """
 import struct
 import wave
@@ -93,6 +93,13 @@ def main():
     for name, midi in NOTES.items():
         write_wav(ROOT / f"assets/audio/{name}.wav", render_note(midi, rng))
     write_png(ROOT / "assets/branding/icon.png", render_icon())
+    (ROOT / "web/icons").mkdir(parents=True, exist_ok=True)
+    write_png(ROOT / "web/favicon.png", render_icon(32, 8))
+    for size in (192, 512):
+        icon = render_icon(size, 4)
+        write_png(ROOT / f"web/icons/Icon-{size}.png", icon)
+        # The artwork stays inside the maskable safe zone, so it can be shared.
+        write_png(ROOT / f"web/icons/Icon-maskable-{size}.png", icon)
 
 
 if __name__ == "__main__":

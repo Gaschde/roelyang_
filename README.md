@@ -4,6 +4,15 @@ Flutter-App für die tibetische Laute: Tuner, spielbares Instrument und kurzer L
 Sie bildet Funktionen und Aufbau von „Dranyen" nach, mit eigenem Code und eigenen
 Assets. Details in [docs/ANALYSE.md](docs/ANALYSE.md).
 
+## Web-App
+
+**<https://gaschde.github.io/roelyang_/>**
+
+Läuft ohne Installation im Browser auf iPhone, Android und am Computer. Das Mikrofon
+muss beim ersten Start erlaubt werden. Auf dem iPhone lässt sie sich in Safari über
+**Teilen → Zum Home-Bildschirm** wie eine App ablegen. Jeder Push auf `prototyp`
+aktualisiert sie.
+
 ## Download
 
 [roelyang.ipa herunterladen](https://github.com/Gaschde/roelyang_/releases/download/prototyp-latest/roelyang.ipa)

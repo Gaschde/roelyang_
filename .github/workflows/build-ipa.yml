@@ -28,6 +28,54 @@ jobs:
         if: ${{ !cancelled() }}
         run: flutter test
 
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Build the web app
+        run: flutter build web --release --base-href /roelyang_/ --no-web-resources-cdn --no-wasm-dry-run
+
+      - name: Publish to the gh-pages branch
+        if: github.ref == 'refs/heads/prototyp'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if ! git clone --depth 1 --branch gh-pages "$remote" site; then
+            git init -b gh-pages site
+            git -C site remote add origin "$remote"
+          fi
+          find site -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R build/web/. site/
+          touch site/.nojekyll
+          git -C site config user.name "github-actions[bot]"
+          git -C site config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C site add -A
+          git -C site diff --cached --quiet || git -C site commit -m "Publish web app from ${GITHUB_SHA}"
+          git -C site push origin gh-pages
+
+      - name: Turn on GitHub Pages if it is still off
+        if: github.ref == 'refs/heads/prototyp'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/pages" >/dev/null 2>&1 ||
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/pages" -f "source[branch]=gh-pages" -f "source[path]=/"
+
   build:
     runs-on: macos-latest
     timeout-minutes: 45

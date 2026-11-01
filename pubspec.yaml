@@ -37,7 +37,6 @@ flutter_launcher_icons:
   android: false
   image_path: assets/branding/icon.png
   remove_alpha_ios: true
-
 flutter_native_splash:
   color: "#0E1014"
   android: false

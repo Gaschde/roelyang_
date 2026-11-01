@@ -16,7 +16,12 @@ void main() {
     addTearDown(tester.view.reset);
   }
 
-  for (final size in const [Size(320, 568), Size(390, 844)]) {
+  for (final size in const [
+    Size(320, 568),
+    Size(390, 844),
+    Size(1440, 900), // desktop browser
+    Size(844, 390), // phone browser in landscape
+  ]) {
     testWidgets('home fits on a ${size.width}x${size.height} phone', (
       tester,
     ) async {
@@ -47,7 +52,12 @@ void main() {
   testWidgets('a running tuner shows note, frequency and advice', (
     tester,
   ) async {
-    for (final size in const [Size(320, 568), Size(390, 844)]) {
+    for (final size in const [
+    Size(320, 568),
+    Size(390, 844),
+    Size(1440, 900), // desktop browser
+    Size(844, 390), // phone browser in landscape
+  ]) {
       usePhone(tester, size);
       final tuner = TunerController()
         ..running = true
